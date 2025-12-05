@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results | Renewable Displacement Analysis</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>Renewable Displacement Analysis</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Overview</a></li>
+                <li><a href="methodology.html">Methodology</a></li>
+                <li><a href="results.html" class="active">Results</a></li>
+                <li><a href="https://github.com/keithcockerham/Renewable_Displacement" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="hero">
+        <div class="container">
+            <h2>Displacement Results & Statistical Evidence</h2>
+            <p class="subtitle">
+                How much do solar and wind actually move the needle on fossil generation?
+            </p>
+        </div>
+    </section>
+
+    <!-- High-Level Summary -->
+    <section class="overview">
+        <div class="container">
+            <h2>High-Level Summary</h2>
+
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <h3>Renewables → Natural Gas</h3>
+                    <p><strong>Result:</strong> Strong short-run displacement.</p>
+                    <ul style="list-style: none; padding-left: 0; line-height: 1.7;">
+                        <li>✓ Negative regression coefficient (Δrenew → Δgas)</li>
+                        <li>✓ High statistical significance</li>
+                        <li>✓ High R² when controlling for system movement</li>
+                        <li>✓ Granger-causality: renewables help predict gas at most lags</li>
+                    </ul>
+                    <p style="margin-top: 0.5rem; color: #718096; font-size: 0.9rem;">
+                        Interpretation: When renewables step up, gas steps back in the short run.
+                    </p>
+                </div>
+
+                <div class="overview-card">
+                    <h3>Renewables → Coal</h3>
+                    <p><strong>Result:</strong> No robust displacement signal.</p>
+                    <ul style="list-style: none; padding-left: 0; line-height: 1.7;">
+                        <li>• Mixed / weak Granger results</li>
+                        <li>• Low explanatory power in regression</li>
+                        <li>• No clear short-run pattern in changes</li>
+                    </ul>
+                    <p style="margin-top: 0.5rem; color: #718096; font-size: 0.9rem;">
+                        Interpretation: Coal is driven by structural factors and seasonal load,
+                        not short-run renewable variability.
+                    </p>
+                </div>
+
+                <div class="overview-card">
+                    <h3>Direction & Causality</h3>
+                    <p><strong>Focus:</strong> Predictive direction, not strict causation.</p>
+                    <ul style="list-style: none; padding-left: 0; line-height: 1.7;">
+                        <li>✓ renew → gas: strong, consistent signal</li>
+                        <li>• gas → renew: not physically meaningful</li>
+                        <li>• renew ↔ coal: no clear operational pattern</li>
+                    </ul>
+                    <p style="margin-top: 0.5rem; color: #718096; font-size: 0.9rem;">
+                        Together with grid physics, this supports a story where gas is the
+                        flexible balancing fuel, not coal.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gas Displacement Results -->
+    <section class="metrics">
+        <div class="container">
+            <h2>Natural Gas: Displacement Evidence</h2>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">📉</div>
+                    <div class="metric-value">β &lt; 0</div>
+                    <div class="metric-label">Regression Effect</div>
+                    <p class="metric-desc">
+                        Month-to-month changes in renewables are associated with
+                        decreases in natural gas generation.
+                    </p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">📊</div>
+                    <div class="metric-value">p &lt; 0.01</div>
+                    <div class="metric-label">Granger (renew → gas)</div>
+                    <p class="metric-desc">
+                        Past renewables significantly improve forecasts of future gas
+                        at most lags from 1–12 months.
+                    </p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">⚡</div>
+                    <div class="metric-value">Short-Run</div>
+                    <div class="metric-label">Time Scale</div>
+                    <p class="metric-desc">
+                        Effects show up in immediate monthly changes, not as a long-run
+                        permanent shift in gas levels.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Placeholder for Granger p-values chart: Renew -> Gas -->
+            <div id="grangerGasChart" style="margin-top: 3rem; height: 400px;"></div>
+            <!-- Placeholder for Granger p-values chart: Gas -> Renew -->
+            <div id="grangerGasRevChart" style="margin-top: 2rem; height: 300px;"></div>
+        </div>
+    </section>
+
+    <!-- Coal Results -->
+    <section class="findings">
+        <div class="container">
+            <h2>Coal: No Short-Run Displacement</h2>
+
+            <div class="findings-grid">
+                <div class="finding-card">
+                    <h3>Regression Outcome</h3>
+                    <p>
+                        When the same regression structure is applied to coal, the coefficient on
+                        Δrenew is small, unstable, and not reliably negative.
+                    </p>
+                    <p style="margin-top: 0.5rem;">
+                        This suggests that coal does not respond in a systematic short-run way to
+                        month-to-month renewable changes.
+                    </p>
+                </div>
+
+                <div class="finding-card">
+                    <h3>Granger Causality</h3>
+                    <p>
+                        The Granger tests for <strong>renew → coal</strong> show a few significant
+                        lags, but without a coherent or persistent pattern across horizons.
+                    </p>
+                    <p style="margin-top: 0.5rem;">
+                        In other words, there is no strong evidence that the history of renewable
+                        output improves coal forecasts beyond what coal already “knows” about itself.
+                    </p>
+                </div>
+
+                <div class="finding-card">
+                    <h3>Operational Interpretation</h3>
+                    <p>
+                        This matches how the grid works: coal units are slower to ramp and are driven
+                        by seasonal and structural factors rather than by the daily variability of wind
+                        and solar.
+                    </p>
+                </div>
+            </div>
+            <!-- Gas Displacement -->
+            <div id="grangerGasChart" style="margin-top: 3rem; height: 400px;"></div>
+
+            <!-- Coal Displacement -->
+            <div id="grangerCoalChart" style="margin-top: 3rem; height: 300px;"></div>
+        </div>
+    </section>
+
+    <!-- Comparative View -->
+    <section class="technical">
+        <div class="container">
+            <h2>Renewables vs Gas vs Coal</h2>
+
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h3>Who Moves When Renewables Move?</h3>
+                    <ul>
+                        <li><strong>Natural Gas:</strong> clearly responds in the short run.</li>
+                        <li><strong>Coal:</strong> mostly unaffected in the short run.</li>
+                        <li><strong>Total Generation:</strong> helps separate demand-driven changes from substitution effects.</li>
+                    </ul>
+                </div>
+
+                <div class="tech-card">
+                    <h3>How Strong Is the Signal?</h3>
+                    <ul>
+                        <li>Gas shows both strong statistical significance and a clear physical mechanism.</li>
+                        <li>Coal shows weak signals and no plausible balancing role.</li>
+                        <li>Combined evidence points to gas as the marginal balancing fuel.</li>
+                    </ul>
+                </div>
+
+                <div class="tech-card">
+                    <h3>What This Does <em>Not</em> Claim</h3>
+                    <ul>
+                        <li>Does not claim that renewables fully “replace” gas capacity.</li>
+                        <li>Does not attribute coal’s long-run decline solely to renewables.</li>
+                        <li>Does not model prices, policies, or regional grid differences.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Takeaways -->
+    <section class="cta">
+        <div class="container">
+            <h2>Key Takeaways</h2>
+            <div class="findings-grid">
+                <div class="finding-card">
+                    <h3>1. Gas Is the First Fuel Displaced</h3>
+                    <p>
+                        In U.S. monthly EIA data, solar and wind primarily displace natural gas on the margin.
+                        When renewables rise unexpectedly, gas typically falls.
+                    </p>
+                </div>
+
+                <div class="finding-card">
+                    <h3>2. Coal’s Story Is Structural, Not Marginal</h3>
+                    <p>
+                        Coal’s decline is visible in the long-run data but does not show up as a short-run
+                        response to renewable variability in this analysis.
+                    </p>
+                </div>
+
+                <div class="finding-card">
+                    <h3>3. Evidence Aligns with Real-World Operations</h3>
+                    <p>
+                        These statistical results line up with how system operators actually use these fuels:
+                        renewables first, gas to balance, and coal as a slower-moving background resource.
+                    </p>
+                </div>
+            </div>
+
+            <div class="cta-buttons" style="margin-top: 2rem;">
+                <a href="methodology.html" class="btn btn-secondary">Review Methodology</a>
+                <a href="https://github.com/keithcockerham/Renewable_Displacement" class="btn btn-primary" target="_blank">View Analysis Code</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>2025 Keith | Renewable Displacement Analysis | <a href="https://github.com/keithcockerham/Renewable_Displacement" target="_blank">GitHub</a></p>
+        </div>
+    </footer>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="renewables-charts.js"></script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renewable Displacement Analysis | U.S. Electricity Data</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="container">
+        <div class="nav-brand">
+            <h1>Renewable Displacement Analysis</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Overview</a></li>
+                <li><a href="methodology.html">Methodology</a></li>
+                <li><a href="results.html">Results</a></li>
+                <li><a href="https://github.com/keithcockerham/Renewable_Displacement" target="_blank">GitHub</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="container hero-content">
+        <h2>The Rise of Solar & Wind and Their Impact on Fossil Fuels</h2>
+        <p class="subtitle">A statistical analysis of displacement effects in U.S. electricity generation (2001–2025)</p>
+
+        <div class="hero-badges">
+            <span class="badge badge-primary">1.36 GB Raw EIA Dataset</span>
+            <span class="badge badge-secondary">751,000 Series Records</span>
+            <span class="badge badge-tertiary">Full National Time Series</span>
+        </div>
+    </div>
+</section>
+
+<!-- Overview -->
+<section class="overview">
+    <div class="container">
+        <h2>Project Overview</h2>
+
+        <div class="overview-grid">
+
+            <div class="overview-card">
+                <h3>Objective</h3>
+                <p>This project examines whether growth in renewable electricity — specifically utility-scale solar and wind — has displaced fossil fuel generation in the United States.</p>
+                <p>Three evidence tests were used: differenced correlations, Granger causality, and regression effect sizes.</p>
+            </div>
+
+            <div class="overview-card">
+                <h3>Data Source</h3>
+                <p>U.S. EIA Electricity dataset (~1.36 GB text file), containing 751k time-stamped generation series across 50 states and fuel types.</p>
+                <p>Monthly national totals were extracted for solar, wind, natural gas, petroleum liquids, and coal.</p>
+            </div>
+
+            <div class="overview-card">
+                <h3>Key Processing Steps</h3>
+                <ul style="margin-top: 1rem; line-height: 1.7;">
+                    <li>Flatten 751k JSON-like series into a national panel</li>
+                    <li>Filter to ELEC.GEN.* categories</li>
+                    <li>Aggregate monthly values into a clean pivot table</li>
+                    <li>Difference all series (ΔMWh) to remove seasonality</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Metrics -->
+<section class="metrics">
+    <div class="container">
+        <h2>High-Level Findings</h2>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon">☀️</div>
+                <div class="metric-value">+6.5×</div>
+                <div class="metric-label">Solar Growth (20 yrs)</div>
+                <p class="metric-desc">Solar generation expanded by over 650% since 2010.</p>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon">🍃</div>
+                <div class="metric-value">+3×</div>
+                <div class="metric-label">Wind Growth</div>
+                <p class="metric-desc">Wind has tripled, becoming a major U.S. energy source.</p>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon">🔥</div>
+                <div class="metric-value">Strong</div>
+                <div class="metric-label">Gas Sensitivity</div>
+                <p class="metric-desc">Gas shows consistent displacement signals from renewables.</p>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon">⛏️</div>
+                <div class="metric-value">None</div>
+                <div class="metric-label">Coal Displacement</div>
+                <p class="metric-desc">Coal is not statistically displaced by renewables in this dataset.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Results Section -->
+<section class="findings">
+    <div class="container">
+        <h2>Core Results</h2>
+
+        <div class="findings-grid">
+
+            <div class="finding-card">
+                <h3>1. Renewable Growth vs Gas Decline</h3>
+                <p>Differenced time series revealed a clear, negative correlation between renewable growth and natural gas generation changes. The pattern is consistent across multiple smoothing windows.</p>
+                <p><strong>Interpretation:</strong> Short-run increases in renewables are associated with short-run reductions in gas generation, especially during periods of rapid solar expansion.</p>
+            </div>
+
+            <div class="finding-card">
+                <h3>2. Granger Causality</h3>
+                <p>Renewables <strong>Granger-cause</strong> natural gas at nearly all lags (p &lt; 0.01). Gas does not robustly Granger-cause renewables.</p>
+                <p><strong>Interpretation:</strong> Renewable changes improve forecasts of future gas generation.</p>
+            </div>
+
+            <div class="finding-card">
+                <h3>3. No Coal Displacement</h3>
+                <p>The coal time series shows no consistent displacement signal. Some lags briefly reach significance but not with coherent directionality.</p>
+                <p><strong>Interpretation:</strong> Coal’s decline is driven by structural factors (retirements, regulation), not renewable competition in this dataset.</p>
+            </div>
+        </div>
+
+        <!-- Placeholder for chart -->
+        <div id="grangerGasChart" style="margin-top: 2rem; height: 400px;"></div>
+
+    </div>
+</section>
+
+<!-- Technical Section -->
+<section class="technical">
+    <div class="container">
+        <h2>Methodology Summary</h2>
+
+        <div class="tech-grid">
+            <div class="tech-card">
+                <h3>Data Engineering</h3>
+                <ul>
+                    <li>Parsed 751k JSON-like series from raw text</li>
+                    <li>Converted all timestamps (monthly, quarterly, annual)</li>
+                    <li>Extracted generation categories: SUN, WND, NG, PEL, COW</li>
+                    <li>Created national pivot table for 2001–2025</li>
+                </ul>
+            </div>
+
+            <div class="tech-card">
+                <h3>Statistical Tests</h3>
+                <ul>
+                    <li>First-difference transformation to remove seasonality</li>
+                    <li>12-lag Granger causality</li>
+                    <li>Regression effect sizes</li>
+                    <li>Rolling correlations (24-month window)</li>
+                </ul>
+            </div>
+
+            <div class="tech-card">
+                <h3>Interpretation Framework</h3>
+                <ul>
+                    <li>Focus on predictive direction, not causation</li>
+                    <li>Evaluate robustness across lags</li>
+                    <li>Compare renew→gas, renew→coal, gas→renew</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <div class="container">
+        <h2>Explore the Code & Data</h2>
+        <div class="cta-buttons">
+            <a href="https://github.com/keithcockerham/Renewable_Displacement" class="btn btn-primary" target="_blank">GitHub Repository</a>
+            <a href="index.html.html" class="btn btn-secondary">Refresh Summary</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <p>2025 Keith | Renewable Displacement Analysis | <a href="https://github.com/keithcockerham/Renewable_Displacement" target="_blank">GitHub</a></p>
+    </div>
+</footer>
+
+</body>
+</html>
